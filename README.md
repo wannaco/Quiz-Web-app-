@@ -1,11 +1,14 @@
- # Quiz Web app
-Quiz web app  - Google Sheets grid data source 
+ # Quiz Web app -
+Quiz web app  - Google Sheets grid data source  
+
+Google forms can be inflexime at times, with this script you can setup a multiple choice quiz with a countdown per question, the scrip sends an email with the score and also shows the score on the screen. 
 
 ## Easily create multiple choice quiz using a grid of questions in a google sheet. 
 
 1. All you need is to make sure you set the questions on column A,
 2. The multiple answers can be set from column B through anything you need but 3 would be ok (Recommneded to keep this short e.g 3 - 4 options maximum)
 3. The right answer Must be specified right after the last optoin given e.g From B to D the right answer is in column C, you will write C on column E which is the following column, you do not need to outlin the row number
+4. Setup a Results sheet and in Row 1 type Question1, Question2... Question10, you must match the number of questions in order to get the onsubmit even push the data properly and set the values on the Results sheet. 
 
 [Click here to access the quiz google sheet example ](https://docs.google.com/spreadsheets/d/1MYjVNUJ0rDmaWYm4IFyEyrcqHLPycnLFat2S1QkIyLQ/edit#gid=0)
 [Click here to access the Quiz web app](https://script.google.com/macros/s/AKfycbxyK53xcE9p4uesOTIKCeFs1fC2FBe1RgjlTIP35xghDi1ZaFY/exec)
