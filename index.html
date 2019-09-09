@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Quiz</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/uikit.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/css/components/notify.css" />
+
+<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/uikit.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/components/notify.js"></script>
+
+
+ 
+  <base target="_top">
+   
+   <script>
+    var loads = localStorage.getItem('on_load_counter');
+    if (loads === null) {
+        loads = 0;
+       }
+ 
+       loads++;
+ 
+    localStorage.setItem("on_load_counter", loads);
+<? var array = getData(); ?>
+  var pos = 0, stopper = 0, test, test_status, question, choice, choices, choA, chB, chC, correct = 0 , correctlocal = 0; incorrect = 0; Ans = new Array;
+var questions = <?!= JSON.stringify(array) ?>;
+function _(x){
+	return document.getElementById(x);
+}
+function renderQuestion(){
+	test = _("test");
+	if(pos >= questions.length){
+     
+   var user =  "<?!= Session.getActiveUser().getEmail(); ?>";
+      
+        test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+       test.innerHTML += "<form id='stopTimer' action='https://script.google.com/macros/s/AKfycbxyK53xcE9p4uesOTIKCeFs1fC2FBe1RgjlTIP35xghDi1ZaFY/exec' method='post'>";
+       var inputs = document.getElementById("stopTimer");                
+                         for (n=0; n < questions.length; n++ ){
+                            var value = Ans[n];
+                            var inid = (n+1);
+                            inputs.innerHTML += ("<input id="+inid+" name='Question"+inid+"'maxlength='100' type='hidden' value>");
+                            document.getElementById(inid).value = value;
+                           }
+         inputs.innerHTML += "<input name='yo' type='hidden' value='"+localStorage.getItem('Score')+"'>"+
+                         "<input name='User' type='hidden' value='"+user+"'>"+
+                         "<input name='Pageloads' type='hidden' value='"+loads+"'>"+
+                         "<input class='uk-button uk-button-success' type='submit' value='Submit'></form>";
+        for (n=0; n < questions.length; n++ ){
+                            var value = localStorage.getItem("Answer"+n);
+                             var inid = (n+1);
+                            document.getElementById(inid).value = value;
+                           }
+		_("test_status").innerHTML = "Test Completed";
+        
+		pos = 0;
+		correct = 0;
+        incorect = 0;
+       
+        
+		return false;
+	}
+	_("test_status").innerHTML = "<div>Question "+(pos+1)+" of "+questions.length +"</div><div ><h3>Incorret: " +incorrect+ "</h3></div><div ><h3>Correct: " +correct+"</h3></div>";
+  if((pos+1) == questions.length){
+ question = questions[pos][0];
+//	choA = questions[pos][1];
+//	chB = questions[pos][2];
+//	chC = questions[pos][3];
+       
+      
+     test.innerHTML = "<h3>"+question+"</h3>";
+     for (n=0; n < (questions[pos].length - 2)  ; n++ ){
+             console.log(questions[pos].length);               
+     test.innerHTML += ("<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='"+String.fromCharCode(66 + n)+"'  onclick='checkAnswer(this.value,this.textContent); cdpause()'>"+questions[pos][n+1]+"</button><br><br>");
+                           
+     }
+	//test.innerHTML = "<h3>"+question+"</h3>";
+	//test.innerHTML += "<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='B'  onclick='checkAnswer(this.value,this.textContent); cdpause()'> "+questions[pos][n]+"</button><br><br>";
+    //test.innerHTML += "<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='C'  onclick='checkAnswer(this.value, this.textContent); cdpause()'> "+questions[pos][n]+"</button><br><br>";
+	//test.innerHTML += "<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='D'  onclick='checkAnswer(this.value, this.textContent); cdpause()'> "+questions[pos][n]+"</button><br><br>";
+	}else{
+    question = questions[pos][0];
+    test.innerHTML = "<h3>"+question+"</h3>";
+    for (n=0; n < (questions[pos].length - 2); n++ ){
+                           console.log(questions[pos].length);
+     test.innerHTML += ("<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='"+String.fromCharCode(66 + n)+"'  onclick='checkAnswer(this.value,this.textContent); cdreset()'>"+questions[pos][n+1]+"</button><br><br>");
+                           
+    }
+//  question = questions[pos][0];
+//	choA = questions[pos][1];
+//	chB = questions[pos][2];
+//	chC = questions[pos][3];
+//	test.innerHTML = "<h3>"+question+"</h3>";
+//	test.innerHTML += "<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='B'  onclick='checkAnswer(this.value, this.textContent); cdreset()'> "+choA+"</button><br><br>";
+//	test.innerHTML += "<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='C'  onclick='checkAnswer(this.value, this.textContent); cdreset()'> "+chB+"</button><br><br>";
+//	test.innerHTML += "<button class='timer uk-button uk-button-primary uk-button-large uk-width-1-1 uk-button-large' type='button' name='choices' value='D'  onclick='checkAnswer(this.value, this.textContent); cdreset()'> "+chC+"</button><br><br>";
+//	
+    
+    }
+}
+
+function checkAnswer(clickedVal,answer){ 
+    var colans = questions[pos].length - 1;
+	if(clickedVal == questions[pos][colans]){
+    
+		correct++;
+	}else{
+    incorrect++;
+    }
+    if(localStorage.getItem("Answer"+pos) === null){
+       localStorage.setItem('Answer'+pos, answer);
+       if(clickedVal == questions[pos][colans]){
+    
+		 correctlocal++;
+         localStorage.setItem("Score", correctlocal);
+	    }
+       
+    }
+    Ans.push(answer);
+    console.log("<p>"+Ans[pos]+"</p>");
+	pos++;
+    stopper++;
+    test.innerHTML = "";
+	renderQuestion();
+}    
+
+   var CCOUNT = 20;
+    
+    var t, counts;
+    
+    function cddisplay() {
+        // displays time in span
+        document.getElementById('count').innerHTML = "<h3>"+counts+"</h3>";
+    };
+    
+    function countdown() {
+        // starts countdown
+          cddisplay();
+                   
+            counts--;
+            t = setTimeout("countdown()", 1000);
+        if(stopper == questions.length){
+             document.getElementById("stopTimer").addEventListener("load", cdpause, false);
+             document.getElementById('count').innerHTML = "";
+           }else{
+        if(counts == 0 ){
+          
+          console.log(stopper);
+          
+           clearTimeout(t);
+           UIkit.notify("<i class='uk-icon-clock-o'></i> Time Up!!!");
+           checkAnswer(value="A");
+           cdreset();
+          
+         } 
+       }  
+    };
+    
+     function cdreset() {
+        // resets countdown
+        
+        clearTimeout(t);
+        counts = CCOUNT;
+        countdown();
+    };
+    
+     function cdpause() {
+        // pauses countdown
+        clearTimeout(t);
+        counts = 0;
+        stopper = 0;
+    };
+
+window.addEventListener("load", renderQuestion, false);
+window.addEventListener("load", cdreset, false); 
+
+
+   
+   </script> 
+  </head>
+  <body class="uk-container uk-container-center uk-margin-large-top ">
+  <i class="uk-icon-button" id="count"></i>
+  <div id="test_status" class="uk-container uk-grid uk-container center uk-grid-width-medium-1-3 uk-grid-width-small-1-3"></div>
+  <div id="test" class="uk-container"></div>
+  </body>
+</html>
+
