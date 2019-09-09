@@ -1,7 +1,7 @@
  # Quiz Web app 
 Quiz web app  - Google Sheets grid data source  
 
-Google forms can be inflexime at times, with this script you can setup a multiple choice quiz with a countdown per question, the scrip sends an email with the score and also shows the score on the screen. 
+Google forms can be inflexible at times, with this script you can setup a multiple choice quiz with a countdown per question, the scrip sends an email with the score and also shows the score on the screen. 
 
 ## Easily create multiple choice quiz using a grid of questions in a google sheet. 
 
