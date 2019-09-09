@@ -27,4 +27,4 @@ The quiz has a countdown per Question and it also records using local storage ho
 5. Under Who has access to the app, select who should be allowed to visit it. The options differ depending on the type of account you have, but they can include "Only myself", any member of your domain, "Anyone" (with a Google account), or "Anyone, even anonymous".
 6. Click Deploy.
 
-This can be improved, it was a small project. If you have any questions feel free to reachout. 
+This can be improved, it was a small project. If you have any questions feel free to reach out. 
