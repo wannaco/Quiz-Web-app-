@@ -1,7 +1,7 @@
  # Quiz Web app
 Quiz web app  - Google Sheets grid data source 
 
-## Easly create multiple choice quiz using a grid of questions in a google sheet. 
+## Easily create multiple choice quiz using a grid of questions in a google sheet. 
 
 1. All you need is to make sure you set the questions on column A,
 2. The multiple answers can be set from column B through anything you need but 3 would be ok (Recommneded to keep this short e.g 3 - 4 options maximum)
